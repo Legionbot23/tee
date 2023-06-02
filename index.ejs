@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ZEUSILA</title>
+  </head>
+  <body>
+<button onclick="start()">Start</button>
+<button onclick="stop()">Stop</button>
+					<p><%=broadcast%></p>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+setInterval(async function () {
+var html = await (await fetch(location.href)).text();
+    var newdoc = new DOMParser().parseFromString(html, 'text/html');
+   document.querySelector("body > p").outerHTML = newdoc.querySelector("body > p").outerHTML;},1000)
+      function refresh() {
+        document.location.href='https://adaptable-monarch-deleted.glitch.me/1'
+      }
+setInterval(refresh,1000*60*4)
+      var connect = document.getElementById("connect");
+      var socket = io();
+     function start() {
+          socket.emit("chat message", "connect");
+}
+     function stop() {
+          socket.emit("chat message", "disconnect");
+}
+document.addEventListener("keydown", function (event) {
+        if (event.code == "Escape") {
+if(document.querySelector("body").style.visibility !== "hidden"){
+document.querySelector("body").style.visibility = "hidden"
+}else{
+document.querySelector("body").style.visibility = "visible"
+}
+        }
+      });
+      socket.on("chat message", function (msg) {
+        var item = document.createElement("li");
+        item.textContent = msg;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+    </script>
+  </body>
+</html>

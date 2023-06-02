@@ -1,0 +1,256 @@
+if(msg == "left") {
+client.movement.input.m_Direction = -1
+}
+if(msg == "right") {
+client.movement.input.m_Direction = 1
+}
+if(msg == "jump") {
+client.movement.input.m_Jump = 1
+}
+
+client.on("disconnect", (reason) => {
+console.log("Disconnected: " + reason);
+   setInterval(() => {
+client.connect()
+   }, 4 * 60 * 1000);
+});
+
+if(msg == "connect") {
+client.connect()
+}
+
+if(msg.includes("x")) {
+client.movement.input.m_TargetX = msg.substr(2,msg.length)
+}
+if(msg.includes("y")) {
+client.movement.input.m_TargetY = msg.substr(2,msg.length)
+}
+if(msg == "fire") {
+client.movement.input.m_Fire = 1
+}
+if(msg == "onfire") {
+client.movement.input.m_Fire = 0
+}
+if(msg == "hook") { 
+client.movement.input.m_Hook = 1
+}
+if(msg == "onhook") {
+client.movement.input.m_Hook = 0
+}
+if(msg == "stop") {
+client.movement.input.m_Direction = 0
+}
+if(msg == "left") {
+client.movement.input.m_Direction = -1
+}
+if(msg == "right") {
+client.movement.input.m_Direction = 1
+}
+if(msg == "jump") {
+client.movement.input.m_Jump = 1
+}
+if(msg == "stop2") {
+client.movement.input.m_Jump = 0
+}
+  });
+
+ function fire() {
+        socket.emit("chat message", `fire`);
+      }
+      function onfire() {
+        socket.emit("chat message", `onfire`);
+      }
+ function hook() {
+        socket.emit("chat message", `hook`);
+      }
+ function onhook() {
+        socket.emit("chat message", `onhook`);
+      }
+      function clientX(x) {
+        socket.emit("chat message", `x-${Number(x)-100}`);
+      }
+      function clientY(y) {
+        socket.emit("chat message", `y-${Number(y)-100}`);
+      }
+document.addEventListener("keydown", function (event) {
+        if (event.code == "KeyA") {
+          socket.emit("chat message", "left");
+        }
+      });
+      document.addEventListener("keyup", function (event) {
+        if (event.code == "KeyA" || event.code == "KeyD") {
+          socket.emit("chat message", "stop");
+        }
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.code == "KeyD") {
+          socket.emit("chat message", "right");
+        }
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.code == "Space") {
+          socket.emit("chat message", "jump");
+        }
+      });
+      document.addEventListener("keyup", function (event) {
+        if (event.code == "Space") {
+          socket.emit("chat message", "stop2");
+        }
+      });
+ document.addEventListener("keydown", function (event) {
+        if (event.code == "KeyT") {
+          socket.emit("chat message", "connect");
+        }
+      });
+ <div
+      onmousemove="clientX(event.clientX); clientY(event.clientY)"
+      onmousedown="if(event.which == 1){fire()}if(event.which == 3){hook()};"
+      onmouseup="if(event.which == 1){onfire()}if(event.which == 3){onhook()}"
+      oncontextmenu="return false"
+      style="width: 100%; height: 2000px"
+    ></div>
+
+let users = client.SnapshotUnpacker.AllObjClientInfo
+let user = users.forEach(element => console.log(users[element.name.indexOf(client.options.identity.name)]));
+
+let nub = client.SnapshotUnpacker.OwnID
+
+client.on("broadcast", (message) => console.log(message)); 
+
+client.on("disconnect", (reason) => console.log("Client disconnected. reason: " + reason));
+
+client.game.CallVoteOption("", "") 
+
+let x = client.SnapshotUnpacker.getObjCharacter(nub).x
+	
+let y = client.SnapshotUnpacker.getObjCharacter(nub).y
+
+console.log(client.VoteOptionList)
+
+function clientX(x) {
+        console.log(`x-${Number(x)-innerWidth/2}`);
+      }
+      function clientY(y) {
+        console.log(`y-${Number(y)-innerHeight/2}`);
+      }
+
+    await page.goto("https://tw.fokkonaut.de/");
+    await page.wait;
+    await page.waitForSelector("body > h3");
+
+if(msg !== "connect" || msg !== "disconnect") {
+try {
+eval(msg)
+} catch (err) {
+    console.error(err) // в консоль попадает сообщение об ошибке и стек ошибки
+}
+}
+
+x: 4014,
+    y: 6417,
+
+    x: 4111,
+    y: 6449,
+  res.sendFile(__dirname + '/index.ejs');
+
+<%=message%>
+
+let client = new teeworlds.Client(ip.substr(0,ip.indexOf(":")), ip.substr(ip.indexOf(":")+1,ip.length), "zέύs", {
+identity: {
+		"name": "zέύs",
+		"clan": "solo nub",
+		"skin": "default",
+		"use_custom_color": 1,
+		"color_body": 16711680,
+		"color_feet": 16776960,
+		"country": -1,
+	}
+});
+
+let client = new teeworlds.Client(ip.substr(0,ip.indexOf(":")), ip.substr(ip.indexOf(":")+1,ip.length), "vasya", {
+identity: {
+		"name": "vasya",
+		"clan": "",
+		"skin": "default",
+	}
+});
+
+client.movement.input.m_Direction = -1
+client.movement.input.m_Jump = 1
+setTimeout(async function () {
+client.movement.input.m_Direction = 0
+client.movement.input.m_Jump = 0
+},200);
+
+if(ip=="45.128.211.163:8303"){
+setTimeout(async function () {
+client.game.Say("/login 1234 1234")
+  },5000);
+
+if(ip=="162.55.21.211:8303"){
+setTimeout(async function () {
+client.game.Say("/login ZEUS223 123456")
+  },5000);
+
+"- Guild"
+"- teleport to guild house"
+
+   setTimeout(async function () {
+client.game.CallVoteOption("- Guild", "")
+},3000);
+    setTimeout(async function () {
+client.game.CallVoteOption("- teleport to guild house", "")
+},5000);
+    setTimeout(async function () {
+client.movement.input.m_Direction = -1
+client.movement.input.m_Jump = 1
+setTimeout(async function () {
+client.movement.input.m_Direction = 0
+client.movement.input.m_Jump = 0
+},180);
+},7000);
+
+else if(msg.includes("x")) {
+client.movement.input.m_TargetX = msg.substr(2,msg.length)
+}
+else if(msg.includes("y")) {
+client.movement.input.m_TargetY = msg.substr(2,msg.length)
+}
+else if(msg == "fire") {
+client.movement.input.m_Fire = 1
+}
+else if(msg == "onfire") {
+client.movement.input.m_Fire = 0
+}
+else if(msg == "hook") { 
+client.movement.input.m_Hook = 1
+}
+else if(msg == "onhook") {
+client.movement.input.m_Hook = 0
+}
+else if(msg == "stop") {
+client.movement.input.m_Direction = 0
+}
+else if(msg == "left") {
+client.movement.input.m_Direction = -1
+}
+else if(msg == "right") {
+client.movement.input.m_Direction = 1
+}
+else if(msg == "jump") {
+client.movement.input.m_Jump = 1
+}
+else if(msg == "stop2") {
+client.movement.input.m_Jump = 0
+}
+
+
+setInterval(async function () {
+const browser = await puppeteer.launch({
+    args: ["--no-sandbox"],
+  });
+const page = await browser.newPage();
+    await page.wait;
+    await page.goto("https://adaptable-monarch-deleted.glitch.me/");
+    await browser.close();
+},1000*60*4)

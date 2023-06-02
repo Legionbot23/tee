@@ -1,0 +1,238 @@
+<html><head>
+    <title>ZEUSILA</title>
+  </head>
+  <body style="visibility: hidden;">
+<button onclick="start()">Start</button>
+<button onclick="stop()">Stop</button>
+<button onclick="setting()">setting</button>
+<div id="settings" style="display: table-caption; visibility: hidden;">
+<p>Tee</p>
+    <label for="name">nick</label>
+    <input type="text" id="name" value="nub">
+    <label for="clan">clan</label>
+    <input type="text" id="clan" value="cool">
+    <input type="color" id="body" value="#e66465">
+    <label for="body">391255</label>
+    <input type="color" id="feet" value="#f6b73c">
+    <label for="feet">380171</label>
+<div class="body">
+<svg class="eyes"></svg>
+<svg class="eyes"></svg>
+<svg class="feet"></svg>
+<svg class="feet2"></svg>
+  
+</div>
+</div>
+<style>
+.body {
+  background: #fda400;
+  border-radius: 50%;
+  color: #fff;
+  height: 5em;
+  position: relative;
+  width: 5em;
+    margin: 30px;
+}
+.eyes {
+ background: black;
+    border-radius: 50%;
+    color: black;
+    height: 1em;
+    position: relative;
+    width: 1em;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+.feet {
+    background: #a67e33;
+    border-radius: 50%;
+    color: #fff;
+    height: 1em;
+    position: relative;
+    width: 3em;
+    top: 30px;
+    left: 7px;
+}
+.feet2 {
+    background: #a67e33;
+    border-radius: 50%;
+    color: #fff;
+    height: 1em;
+    position: relative;
+    width: 3em;
+    top: 4px;
+    left: 37px;
+}
+</style>
+<div
+      onmousemove="clientX(event.clientX); clientY(event.clientY)"
+      onmousedown="if(event.which == 1){fire()}if(event.which == 3){hook()};"
+      onmouseup="if(event.which == 1){onfire()}if(event.which == 3){onhook()}"
+      oncontextmenu="return false"
+      style="width: 100%; height: 2000px"
+    ></div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+function rbg(h){
+var m=h.slice(1).match(/.{2}/g);
+m[0]=parseInt(m[0], 16);
+m[1]=parseInt(m[1], 16);
+m[2]=parseInt(m[2], 16);
+function rgb2hsv(r,g,b) {
+let v=Math.max(r,g,b), c=v-Math.min(r,g,b);
+  let h= c && ((v==r) ? (g-b)/c : ((v==g) ? 2+(b-r)/c : 4+(r-g)/c)); 
+  return [60*(h<0?h+6:h), v&&c/v, v];
+}
+let a1 = Math.floor(rgb2hsv(m[0],m[1],m[2])[0]).toString()
+let a2 = Math.floor(rgb2hsv(m[0],m[1],m[2])[1]).toString()
+let a3 = Math.floor(rgb2hsv(m[0],m[1],m[2])[2]).toString()
+    document.querySelector("#settings > label:nth-child(7)").textContent = `${a1+a2+a3}`;
+}
+function rbg2(h1){
+    var m1=h1.slice(1).match(/.{2}/g);
+m1[0]=parseInt(m1[0], 16);
+m1[1]=parseInt(m1[1], 16);
+m1[2]=parseInt(m1[2], 16);
+function rgb2hsv(r,g,b) {
+let v=Math.max(r,g,b), c=v-Math.min(r,g,b);
+  let h= c && ((v==r) ? (g-b)/c : ((v==g) ? 2+(b-r)/c : 4+(r-g)/c)); 
+  return [60*(h<0?h+6:h), v&&c/v, v];
+}
+let a1 = Math.floor((rgb2hsv(m1[0],m1[1],m1[2])[0]))
+let a2 = Math.floor(((rgb2hsv(m1[0],m1[1],m1[2])[1])*256*255))
+document.querySelector("#settings > label:nth-child(9)").textContent = `${a1}`;
+}
+function fire() {
+        socket.emit("chat message", `fire`);
+      }
+      function onfire() {
+        socket.emit("chat message", `onfire`);
+      }
+ function hook() {
+        socket.emit("chat message", `hook`);
+      }
+ function onhook() {
+        socket.emit("chat message", `onhook`);
+      }
+      function clientX(x) {
+        socket.emit("chat message", `x-${Number(x)-innerWidth/2}`);
+      }
+      function clientY(y) {
+        socket.emit("chat message", `y-${Number(y)-innerHeight/2}`);
+      }
+document.addEventListener("keydown", function (event) {
+        if (event.code == "KeyA") {
+          socket.emit("chat message", "left");
+        }
+      });
+      document.addEventListener("keyup", function (event) {
+        if (event.code == "KeyA" || event.code == "KeyD") {
+          socket.emit("chat message", "stop");
+        }
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.code == "KeyD") {
+          socket.emit("chat message", "right");
+        }
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.code == "Space") {
+          socket.emit("chat message", "jump");
+        }
+      });
+      document.addEventListener("keyup", function (event) {
+        if (event.code == "Space") {
+          socket.emit("chat message", "stop2");
+        }
+      });
+
+                var collorbody;
+                var collorfeet;
+var defaultbody = '#fda400';
+var defaultfeet = '#a67e33';
+window.addEventListener("load", startup, false);
+
+function startup() {
+  collorbody = document.querySelector("#body");
+  collorbody.value = defaultbody;
+  collorbody.addEventListener("input", updatebody, false);
+  collorbody.select();
+  collorfeet = document.querySelector("#feet");
+  collorfeet.value = defaultfeet;
+  collorfeet.addEventListener("input", updatefeet, false);
+  collorfeet.select();
+}
+
+function updatebody(event) {
+  var body = document.querySelector("#settings > div");
+
+  if (body) {
+rbg(document.querySelector("#body").value)
+    body.style.background = event.target.value;
+  }
+}
+
+function updatefeet(event) {
+  var feet = document.querySelector("#settings > div > svg.feet")
+  var feet2 = document.querySelector("#settings > div > svg.feet2")
+  if (feet) {
+rbg2(document.querySelector("#feet").value);
+    feet.style.background = event.target.value;
+    feet2.style.background = event.target.value;
+  }
+}
+
+            
+function setting() {
+if(document.querySelector("#settings").style.visibility !== "hidden"){
+document.querySelector("#settings").style.visibility = "hidden"
+}else{
+document.querySelector("#settings").style.visibility = "inherit"
+}
+}
+      function refresh() {
+        document.location.href='https://adaptable-monarch-deleted.glitch.me/'
+      }
+setInterval(refresh,1000*60*4)
+      var connect = document.getElementById("connect");
+      var socket = io();
+     function start() {
+          socket.emit("chat message", `
+ ip = "130.61.161.200:8303"
+ client = new teeworlds.Client(ip.substr(0,ip.indexOf(":")), ip.substr(ip.indexOf(":")+1,ip.length), 'document.querySelector("#name").value', {
+identity: {
+		"name": '${document.querySelector("#name").value}',
+		"clan": '${document.querySelector("#clan").value}',
+		"skin": "default",
+  		"use_custom_color": 1,
+		"color_body": ${Number(document.querySelector("#settings > label:nth-child(7)").textContent)},
+		"color_feet": ${Number(document.querySelector("#settings > label:nth-child(9)").textContent)},
+		"country": -1
+	}
+});
+
+client.connect()`);
+
+}
+     function stop() {
+          socket.emit("chat message", "disconnect");
+}
+document.addEventListener("keydown", function (event) {
+        if (event.code == "Escape") {
+if(document.querySelector("body").style.visibility !== "hidden"){
+document.querySelector("body").style.visibility = "hidden"
+}else{
+document.querySelector("body").style.visibility = "visible"
+}
+        }
+      });
+      socket.on("chat message", function (msg) {
+        var item = document.createElement("li");
+        item.textContent = msg;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+    </script>
+  
+
+</body></html>
